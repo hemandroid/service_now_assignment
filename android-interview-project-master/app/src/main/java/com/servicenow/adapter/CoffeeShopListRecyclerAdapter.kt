@@ -8,6 +8,7 @@ import com.servicenow.coffee.model.CoffeeShopDetailResponse
 import com.servicenow.exercise.R
 import com.servicenow.exercise.databinding.CoffeeShopItemBinding
 import com.servicenow.exercise_kotlin.OnItemClickListener
+import com.servicenow.exercise_kotlin.utils.Utils
 import kotlinx.android.synthetic.main.coffee_shop_item.view.*
 
 /**
@@ -58,28 +59,11 @@ class CoffeeShopListRecyclerAdapter(private var onItemClickListener: OnItemClick
                 tv_coffee_shop_name.text = get.name
                 tv_coffee_shop_address.text = get.location
                 tv_store_rating.rating = get.rating!!.toFloat()
-                coffee_shop_image.setImageResource(getIconResourceFromName(get.name.toString()))
+                coffee_shop_image.setImageResource(Utils.getIconResourceFromName((get.name.toString())))
                 listItem.setOnClickListener {
                     callBack.onItemClick(adapterPosition)
                 }
             }
-        }
-    }
-
-    /**
-     * static method getIconResourceFromName to load local image files with Json Data based on Title
-     */
-    companion object {
-        @JvmStatic
-        fun getIconResourceFromName(name: String): Int {
-            when (name) {
-                "Lofty" -> return R.drawable.bean_bag
-                "Zumbar" -> return R.drawable.coffee_cup
-                "Blue Bottle" -> return R.drawable.coffee_grinder
-                "Bird Rock" -> return R.drawable.coffee_maker
-                "Better Buzz Coffee" -> return R.drawable.coffee_shop
-            }
-            return -1
         }
     }
 }

@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.servicenow.exercise.R
 import com.servicenow.exercise.databinding.ActivityReviewBinding
+import com.servicenow.exercise_kotlin.utils.Utils
 
 
 class ReviewActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -57,7 +58,7 @@ class ReviewActivity : AppCompatActivity(), OnMapReadyCallback {
             activityReviewBinding.coffeeReview.text = coffeeReview
             activityReviewBinding.coffeeRating.rating = coffeeRating.toFloat()
             activityReviewBinding.location.text = storeLocation
-
+            activityReviewBinding.coffeeStoreImage.setImageResource(Utils.getIconResourceFromName(storeName.toString()))
             /**
              * Fetching latlng values by Geo-coding the address from ViewModel method
              */
