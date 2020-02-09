@@ -46,8 +46,7 @@ dependencies {
     // Retrofit2
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
 
-    // Retrofit Moshi Converter
-//    implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_moshi_converter"
+    // Retrofit Gson Converter
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
 
     // SDP - Scale Dependent Pixel Library by Intuit
