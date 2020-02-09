@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Coffee Shop Reviews</string>
+    <string name="coffee_shop_name">Title</string>
+    <string name="address_pointer">Coffee shop address</string>
+    <string name="address">Address</string>
+    <string name="review">Review</string>
+    <string name="location">Location</string>
+    <string name="please_wait">Please wait ...</string>
+</resources>
