@@ -19,11 +19,11 @@ import com.servicenow.exercise.databinding.ActivityMainBinding
 import com.servicenow.exercise_kotlin.model.ReviewListActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class ReviewListActivityKt : AppCompatActivity(), OnItemClickListener {
+class ReviewListActivity : AppCompatActivity(), OnItemClickListener {
     /**
      * Initializing recyclerview adapter
      */
-    private var coffeeShopListRecyclerAdapter = CoffeeShopListRecyclerAdapter(this)
+    private val coffeeShopListRecyclerAdapter by lazy { CoffeeShopListRecyclerAdapter(this) }
 
     /**
      * ViewModel variable initialization
@@ -49,9 +49,8 @@ class ReviewListActivityKt : AppCompatActivity(), OnItemClickListener {
         /**
          * Adding databinding to local variable to be used within onCreate method
          */
-        reviewListActivityBinding =
-            DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-        reviewListActivityBinding.lifecycleOwner = this
+        reviewListActivityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        reviewListActivityBinding.lifecycleOwner = this // This is only for two-way databinding
 
         // Progress bar indication while before loading the view
         reviewListActivityBinding.progressIndication.visibility = View.VISIBLE
@@ -72,7 +71,7 @@ class ReviewListActivityKt : AppCompatActivity(), OnItemClickListener {
      */
     private fun setUpRecyclerView() {
         with(reviewListActivityBinding.coffeeShopList) {
-            layoutManager = LinearLayoutManager(this@ReviewListActivityKt)
+            layoutManager = LinearLayoutManager(this@ReviewListActivity)
             reviewListActivityBinding.coffeeShopList.setHasFixedSize(true)
             reviewListActivityBinding.coffeeShopList.adapter = coffeeShopListRecyclerAdapter
         }
@@ -95,9 +94,15 @@ class ReviewListActivityKt : AppCompatActivity(), OnItemClickListener {
 
     /**
      * Callback for itemClicklistener on Recyclerview
+     * Intent operation from ListActivity to Review Activity
      */
     override fun onItemClick(position: Int) {
-        coffeeShopViewModel.selectedCoffeeShop(position, this)
+        val intent = Intent(this, ReviewActivity::class.java)
+        intent.putExtra("name", ListOfCoffeeShop.get(position).name)
+        intent.putExtra("review", ListOfCoffeeShop.get(position).review)
+        intent.putExtra("rating", ListOfCoffeeShop.get(position).rating)
+        intent.putExtra("location", ListOfCoffeeShop.get(position).location)
+        startActivity(intent)
     }
 
     /**

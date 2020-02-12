@@ -1,17 +1,13 @@
 package com.servicenow.exercise_kotlin
 
-import android.app.Application
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 import java.io.IOException
 
-class ReviewActivityViewModel(application: Application) : AndroidViewModel(application) {
-
-    //  local variable to hold newly created latlng values from Address by Geo-coding
-    private lateinit var latlng: LatLng
+class ReviewActivityViewModel: ViewModel(){
 
     /**
      * function for geo-coding the address into LatLng values
@@ -23,13 +19,10 @@ class ReviewActivityViewModel(application: Application) : AndroidViewModel(appli
         try {
             // May throw an IOException
             address = coder.getFromLocationName(strAddress, 5)
-            if (address == null) {
-                return null
-            }
+            address ?: return null
 
             val location = address[0]
-            latLng = LatLng(location.getLatitude(), location.getLongitude())
-            latlng = latLng
+            latLng = LatLng(location.latitude, location.longitude)
         } catch (ex: IOException) {
 
             ex.printStackTrace()

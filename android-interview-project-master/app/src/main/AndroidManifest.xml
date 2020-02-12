@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.servicenow.exercise_kotlin.ReviewActivity"></activity>
-        <activity android:name="com.servicenow.exercise_kotlin.ReviewListActivityKt">
+        <activity android:name="com.servicenow.exercise_kotlin.ReviewListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

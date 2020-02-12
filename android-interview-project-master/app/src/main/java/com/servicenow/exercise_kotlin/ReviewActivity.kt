@@ -46,11 +46,12 @@ class ReviewActivity : AppCompatActivity(), OnMapReadyCallback {
          * Receiving the incoming data with the help of intent
          * Storing into local final @param val variables
          */
-        if (intent != null) {
-            val coffeeReview = intent.getStringExtra("review")
-            val coffeeRating = intent.getIntExtra("rating", 0)
-            val storeLocation = intent.getStringExtra("location")
-            storeName = intent.getStringExtra("name")
+
+        intent?.apply {
+            val coffeeReview = getStringExtra("review")
+            val coffeeRating = getIntExtra("rating", 0)
+            val storeLocation = getStringExtra("location")
+            storeName = getStringExtra("name")
 
             /**
              * Appending data to view items
@@ -58,23 +59,28 @@ class ReviewActivity : AppCompatActivity(), OnMapReadyCallback {
             activityReviewBinding.coffeeReview.text = coffeeReview
             activityReviewBinding.coffeeRating.rating = coffeeRating.toFloat()
             activityReviewBinding.location.text = storeLocation
-            activityReviewBinding.coffeeStoreImage.setImageResource(Utils.getIconResourceFromName(storeName.toString()))
+            activityReviewBinding.coffeeStoreImage.setImageResource(
+                Utils.getIconResourceFromName(
+                    storeName.toString()
+                )
+            )
             /**
              * Fetching latlng values by Geo-coding the address from ViewModel method
              */
-            latlng = reviewActivityViewModel.getLocationFromAddress(this, storeLocation)!!
+            latlng =
+                reviewActivityViewModel.getLocationFromAddress(this@ReviewActivity, storeLocation)!!
+        }
+        /**
+         * Loading the mapView
+         */
+        loadMapView(activityReviewBinding, savedInstanceState)
 
-            /**
-             * Loading the mapView
-             */
-            loadMapView(activityReviewBinding, savedInstanceState)
-
-            /**
-             * Adding custom title and back button to AppBar
-             */
-            val actionbar = supportActionBar
-            actionbar!!.title = storeName
-            actionbar.setDisplayHomeAsUpEnabled(true)
+        /**
+         * Adding custom title and back button to AppBar
+         */
+        supportActionBar?.also {
+            it.title = storeName
+            it.setDisplayHomeAsUpEnabled(true)
         }
     }
 
@@ -104,7 +110,7 @@ class ReviewActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         MapsInitializer.initialize(this)
         map = googleMap
-        if (!::map.isInitialized) return
+        if (::map.isInitialized.not()) return
         with(map) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13f))
             addMarker(MarkerOptions().position(latlng).title(storeName))
